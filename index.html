@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsEdge | A Higher Edge For All</title>
+    <meta name="description" content="AsEdge is a business growth and execution company helping businesses unlock their full potential through strategy, execution, talent, systems, and technology.">
+    <meta property="og:title" content="AsEdge | A Higher Edge For All">
+    <meta property="og:description" content="Every business deserves the opportunity to reach its full potential. AsEdge is a growth ecosystem designed to identify hidden risks, solve operational bottlenecks, and map the pathways to a healthier business.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AsEdge | A Higher Edge For All">
+    <meta name="twitter:description" content="Every business deserves the opportunity to reach its full potential.">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+        :root {
+            --navy: #000080;
+            --navy-light: #1a1a99;
+            --navy-dark: #00004d;
+            --beige: #B99A73;
+            --beige-light: #d4bda2;
+            --beige-dark: #8b7151;
+            --white: #ffffff;
+            --danger: #ff6b5e;
+            --warn: #FFC107;
+            --success: #4CAF50;
+            --mx: 50%;
+            --my: 50%;
+            --ease: cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: none; /* replaced by custom cursor */
+        }
+
+        h1, h2, h3, h4, h5, .brand-font { font-family: 'Space Grotesk', sans-serif; }
+
+        /* ═══════ AMBIENT SPOTLIGHT (mouse-reactive lighting) ═══════ */
+        #spotlight {
+            position: fixed; inset: 0; z-index: 2; pointer-events: none;
+            background: radial-gradient(560px circle at var(--mx) var(--my), rgba(185, 154, 115, 0.10), transparent 62%);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        #spotlight.active { opacity: 1; }
+
+        /* ═══════ SCROLL PROGRESS BAR ═══════ */
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--beige-dark), var(--beige), var(--beige-light));
+            z-index: 10001;
+            box-shadow: 0 0 10px rgba(185, 154, 115, 0.6);
+            pointer-events: none;
+            transition: width 0.08s linear;
+        }
+
+        /* ═══════ CUSTOM CURSOR ═══════ */
+        .cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 7px; height: 7px;
+            background: var(--beige);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+            will-change: left, top;
+        }
+        .cursor-dot.hovering {
+            width: 38px; height: 38px;
+            background: rgba(185, 154, 115, 0.1);
+            border: 1px solid rgba(185, 154, 115, 0.5);
+        }
+        .cursor-ring {
+            position: fixed;
+            top: 0; left: 0;
+            width: 32px; height: 32px;
+            border: 1px solid rgba(185, 154, 115, 0.35);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease, border-color 0.3s ease;
+            will-change: left, top;
+        }
+        .cursor-ring.hovering {
+            width: 54px; height: 54px;
+            border-color: rgba(185, 154, 115, 0.18);
+        }
+        @media (hover: none), (pointer: coarse) {
+            .cursor-dot, .cursor-ring { display: none; }
+            body { cursor: auto; }
+        }
+
+        /* ═══════ LAYOUT & UTILITIES ═══════ */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .split-bg-navy-beige {
+            background: linear-gradient(135deg, var(--navy) 55%, var(--beige) 45%);
+        }
+        .beige-section { background-color: var(--beige); color: var(--navy); }
+        .navy-section { background-color: var(--navy); color: var(--beige); }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.4s var(--ease);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            cursor: none;
+            will-change: transform;
+        }
+        .btn-primary { background-color: var(--beige); color: var(--navy); border: 1px solid var(--beige); }
+        .btn-primary:hover { background-color: transparent; color: var(--beige); }
+        .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none !important; }
+        .btn-secondary { background-color: transparent; color: var(--beige); border: 1px solid var(--beige); }
+        .btn-secondary:hover { background-color: var(--beige); color: var(--navy); }
+
+        .tagline-label {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid var(--beige);
+            color: var(--beige);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ═══════ NAVIGATION ═══════ */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(0, 0, 128, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(185, 154, 115, 0.2);
+        }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+        .brand {
+            font-size: 1.8rem; font-weight: 700; color: var(--beige);
+            text-decoration: none; display: flex; align-items: center; gap: 12px; letter-spacing: -0.5px;
+        }
+        .brand-icon { width: 32px; height: auto; color: var(--beige); }
+        .nav-links a {
+            color: var(--beige); text-decoration: none; margin-left: 2.5rem;
+            font-size: 0.9rem; font-weight: 500; position: relative; font-family: 'Space Grotesk', sans-serif;
+            cursor: none;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px;
+            background-color: var(--beige); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: none; background: none; border: none; padding: 0.4rem;
+        }
+        .hamburger span { display: block; width: 24px; height: 2px; background-color: var(--beige); transition: all 0.3s ease; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ═══════ STORY RAIL (scroll narrative nav) ═══════ */
+        .story-rail {
+            position: fixed; left: 2.4rem; top: 50%; transform: translateY(-50%);
+            z-index: 500; display: flex; align-items: center;
+        }
+        .story-rail .rail-line { position: relative; width: 1px; height: 230px; background: rgba(185, 154, 115, 0.22); margin-right: 1.1rem; flex-shrink: 0; }
+        .story-rail .rail-fill { position: absolute; top: 0; left: 0; width: 100%; height: 0%; background: var(--beige); box-shadow: 0 0 8px var(--beige); transition: height 0.4s var(--ease); }
+        .story-rail ul { list-style: none; display: flex; flex-direction: column; justify-content: space-between; height: 230px; }
+        .story-rail li { display: flex; align-items: center; gap: 0.7rem; cursor: none; opacity: 0.45; transition: opacity 0.3s ease; }
+        .story-rail li.active { opacity: 1; }
+        .story-rail .rail-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(185, 154, 115, 0.4); transition: all 0.3s ease; flex-shrink: 0; }
+        .story-rail li.active .rail-dot { background: var(--beige); box-shadow: 0 0 10px var(--beige); transform: scale(1.35); }
+        .story-rail .rail-label { font-family: 'Space Grotesk'; font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--beige); white-space: nowrap; }
+        @media (max-width: 1500px) { .story-rail { display: none; } }
+
+        /* ═══════ HERO ═══════ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 5rem;
+            overflow: hidden;
+        }
+        .hero-bg-layer {
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 80% 20%, rgba(185,154,115,0.12) 0%, transparent 50%);
+            z-index: 0;
+        }
+        /* Particle canvas sits between bg-layer and hero-content */
+        #hero-canvas {
+            position: absolute; inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+        .hero-content { position: relative; z-index: 10; max-width: 850px; }
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 4.8rem);
+            line-height: 1.05;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+        .hero h1 span { color: var(--beige); font-style: italic; }
+        /* Scrambled placeholder chars */
+        .sc { opacity: 0.4; font-style: normal; }
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--beige-light);
+            max-width: 650px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        /* ── Hero diagnostic atmosphere: EKG strip ── */
+        .vitals-strip {
+            position: absolute; left: 0; right: 0; bottom: 0;
+            height: 110px; z-index: 3; pointer-events: none;
+            opacity: 0.65;
+        }
+        .vitals-strip svg { width: 100%; height: 100%; display: block; }
+        .ekg-erratic, .ekg-stable { fill: none; stroke-width: 2; stroke-linecap: round; opacity: 0; }
+        .ekg-erratic { stroke: var(--danger); }
+        .ekg-stable { stroke: var(--beige); }
+        .scan-beam {
+            position: absolute; top: 0; bottom: 0; left: 0; width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(185,154,115,0.95), transparent);
+            box-shadow: 0 0 18px rgba(185,154,115,0.85);
+            opacity: 0;
+        }
+        @media (max-width: 900px) { .vitals-strip { display: none; } }
+
+        /* ── Hero diagnostic atmosphere: HUD readout ── */
+        .hero-hud {
+            position: absolute; top: 24%; right: 5%; z-index: 6;
+            display: flex; flex-direction: column; gap: 0.9rem; width: 200px;
+        }
+        .hud-status {
+            font-family: 'Space Grotesk'; font-size: 0.72rem; letter-spacing: 2.5px;
+            text-transform: uppercase; color: var(--beige); opacity: 0.85;
+            border-bottom: 1px solid rgba(185,154,115,0.25); padding-bottom: 0.6rem; margin-bottom: 0.2rem;
+        }
+        .metric-chip {
+            display: flex; flex-direction: column; gap: 3px;
+            padding: 0.65rem 1rem; border-radius: 10px;
+            background: rgba(0, 0, 77, 0.55); border: 1px solid rgba(185, 154, 115, 0.25);
+            backdrop-filter: blur(6px);
+            opacity: 0; transform: translateY(14px) scale(0.94);
+            transition: border-color 0.6s ease;
+        }
+        .metric-chip .m-label { font-family: 'Space Grotesk'; font-size: 0.66rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+        .metric-chip .m-value { font-family: 'Space Grotesk'; font-size: 1.05rem; font-weight: 600; color: var(--danger); display: flex; align-items: center; gap: 6px; }
+        .metric-chip.healthy { border-color: rgba(76, 175, 80, 0.45); }
+        .metric-chip.healthy .m-value { color: var(--success); }
+        @media (max-width: 1500px) { .hero-hud { display: none; } }
+
+        /* ═══════ WHY NOW ═══════ */
+        .why-now { padding: 8rem 0; position: relative; }
+        .why-header { margin-bottom: 5rem; max-width: 650px; }
+        .why-header h2 { font-size: 3rem; margin-bottom: 1rem; line-height: 1.1; }
+        .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; perspective: 1200px; }
+        .why-card {
+            background: transparent;
+            border: 1px solid rgba(0, 0, 128, 0.2);
+            padding: 3rem 2rem;
+            position: relative;
+            transition: border-color 0.4s var(--ease), transform 0.6s var(--ease);
+            overflow: hidden;
+            will-change: transform;
+        }
+        .why-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: var(--navy);
+            transform: translateY(100%);
+            transition: transform 0.5s var(--ease);
+            z-index: 0;
+        }
+        .why-card:hover::before { transform: translateY(0); }
+        .why-card:hover { border-color: var(--navy); }
+        .why-card:hover .why-icon,
+        .why-card:hover h3,
+        .why-card:hover p { color: var(--beige); }
+        .why-content { position: relative; z-index: 1; transition: color 0.4s ease; }
+        .why-icon { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--navy); display: inline-block; transition: transform 0.4s var(--ease); }
+        .why-card:hover .why-icon { transform: scale(1.18) rotate(-6deg); }
+        .why-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--navy); }
+        .why-card p { color: rgba(0, 0, 128, 0.8); font-size: 0.95rem; }
+
+        /* ═══════ SIGNATURE EXPERIENCE ═══════ */
+        .signature-experience { padding: 8rem 0; overflow: hidden; }
+        .sig-header { text-align: center; margin-bottom: 6rem; }
+        .sig-header h2 { font-size: 3.5rem; color: var(--beige); margin-bottom: 1rem; }
+        .ecosystem-flow {
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative; max-width: 1100px; margin: 0 auto;
+        }
+        .flow-line {
+            position: absolute; top: 50%; left: 5%; right: 5%;
+            height: 2px; background: rgba(185, 154, 115, 0.2);
+            transform: translateY(-50%); z-index: 0;
+        }
+        .flow-line-active {
+            position: absolute; top: 0; left: 0; height: 100%;
+            width: 0%; background: var(--beige);
+            box-shadow: 0 0 15px var(--beige);
+            transition: width 0.5s ease;
+        }
+        .node-wrapper { position: relative; z-index: 1; text-align: center; width: 160px; cursor: none; }
+        .node-circle {
+            width: 80px; height: 80px; background: var(--navy-dark);
+            border: 2px solid var(--beige); border-radius: 50%;
+            margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s var(--ease); position: relative;
+        }
+        .node-circle::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            border-radius: 50%; border: 1px solid var(--beige);
+            opacity: 0; transform: scale(1.5); transition: all 0.4s ease;
+        }
+        .node-wrapper:hover .node-circle {
+            background: var(--beige); color: var(--navy);
+            transform: scale(1.1); box-shadow: 0 0 30px rgba(185, 154, 115, 0.4);
+        }
+        .node-wrapper:hover .node-circle::after { opacity: 1; transform: scale(1.2); }
+        .node-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; color: var(--beige); }
+        .node-desc {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            width: 200px; margin-top: 1rem; font-size: 0.85rem; color: var(--beige-light);
+            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .node-wrapper:hover .node-desc { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(10px); }
+
+        /* ═══════ VERIDEX ═══════ */
+        .veridex { padding: 8rem 0; }
+        .veridex-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; }
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--navy); color: var(--beige);
+            padding: 0.5rem 1.2rem; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 2rem; border: 1px solid rgba(185, 154, 115, 0.3);
+        }
+        .badge-dot { width: 8px; height: 8px; background: var(--beige); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .veridex-ui {
+            background: var(--navy-dark); border: 1px solid var(--beige);
+            border-radius: 12px; padding: 1.5rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15); position: relative;
+        }
+        .ui-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(185, 154, 115, 0.2);
+            padding-bottom: 1rem; margin-bottom: 1.5rem;
+        }
+        .ui-title { color: var(--beige); font-family: 'Space Grotesk'; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .ui-live-tag {
+            font-size: 0.72rem; padding: 0.3rem 0.8rem; border-radius: 50px;
+            border: 1px solid rgba(185, 154, 115, 0.3); color: var(--beige-light);
+            font-family: 'Space Grotesk'; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .ui-live-tag.scanning { color: var(--beige); border-color: var(--beige); animation: pulse 1.4s infinite; }
+        .ui-live-tag.complete { color: var(--success); border-color: rgba(76,175,80,0.5); }
+
+        /* Demo stages */
+        .demo-stage[hidden] { display: none !important; }
+        .demo-copy { color: var(--beige-light); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .demo-run-btn, #rerun-diagnosis { width: 100%; text-align: center; }
+
+        .scan-row { margin-bottom: 1.4rem; opacity: 0.5; transition: opacity 0.3s ease; }
+        .scan-row.active, .scan-row.done { opacity: 1; }
+        .scan-row-top { display: flex; justify-content: space-between; font-family: 'Space Grotesk'; font-size: 0.85rem; color: var(--white); margin-bottom: 0.5rem; }
+        .scan-pct { color: var(--beige-light); font-size: 0.8rem; }
+        .scan-bar { height: 5px; background: rgba(185, 154, 115, 0.12); border-radius: 50px; overflow: hidden; }
+        .scan-bar-fill { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--beige-dark), var(--beige)); border-radius: 50px; }
+        .scan-result { font-size: 0.8rem; margin-top: 0.55rem; min-height: 1.1em; }
+        .scan-result.tier-good { color: var(--success); }
+        .scan-result.tier-warn { color: var(--warn); }
+        .scan-result.tier-risk { color: var(--danger); }
+
+        .ai-thinking { display: flex; align-items: center; gap: 0.6rem; color: var(--beige-light); font-size: 0.85rem; margin-top: 0.8rem; }
+        .ai-thinking[hidden] { display: none !important; }
+        .ai-thinking span { width: 6px; height: 6px; border-radius: 50%; background: var(--beige); animation: dotPulse 1s infinite ease-in-out; }
+        .ai-thinking span:nth-child(2) { animation-delay: 0.15s; }
+        .ai-thinking span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1.15); } }
+
+        .report-score { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.6rem; }
+        .score-ring-wrap { position: relative; width: 108px; height: 108px; flex-shrink: 0; }
+        .score-ring { width: 108px; height: 108px; transform: rotate(-90deg); }
+        .score-ring-track { fill: none; stroke: rgba(185, 154, 115, 0.12); stroke-width: 8; }
+        .score-ring-fill { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke 0.4s ease; }
+        .score-num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk'; font-size: 1.7rem; font-weight: 700; color: var(--white); }
+        .score-num small { font-size: 0.9rem; font-weight: 400; color: var(--beige-light); margin-left: 2px; }
+        .score-text-label { font-family: 'Space Grotesk'; font-size: 1.05rem; color: var(--beige); }
+
+        .report-risks { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.6rem; }
+        .risk-row { display: flex; align-items: center; gap: 0.8rem; font-size: 0.82rem; }
+        .risk-name { width: 90px; flex-shrink: 0; color: var(--beige-light); font-family: 'Space Grotesk'; }
+        .risk-track { flex: 1; height: 5px; background: rgba(185, 154, 115, 0.12); border-radius: 50px; overflow: hidden; }
+        .risk-fill { display: block; height: 100%; width: 0%; border-radius: 50px; }
+        .risk-row.tier-good .risk-fill { background: var(--success); }
+        .risk-row.tier-warn .risk-fill { background: var(--warn); }
+        .risk-row.tier-risk .risk-fill { background: var(--danger); }
+        .risk-score { width: 30px; text-align: right; color: var(--white); font-family: 'Space Grotesk'; font-size: 0.85rem; }
+
+        .report-growth { margin-bottom: 1.6rem; }
+        #growth-chart { width: 100%; height: auto; margin-top: 0.6rem; display: block; }
+        .growth-line { fill: none; stroke-width: 2.2; }
+        .line-risk { stroke: var(--danger); opacity: 0.85; }
+        .line-good { stroke: var(--success); opacity: 0.95; }
+        .chart-legend { display: flex; gap: 1.2rem; margin-top: 0.7rem; font-size: 0.75rem; color: var(--beige-light); }
+        .chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .legend-dot.risk { background: var(--danger); }
+        .legend-dot.good { background: var(--success); }
+
+        .risk-alert {
+            display: flex; align-items: flex-start; gap: 10px;
+            background: rgba(255, 193, 7, 0.1); border-left: 2px solid #FFC107;
+            padding: 0.8rem; margin-bottom: 1.2rem; font-size: 0.8rem; color: var(--white);
+        }
+
+        /* ═══════ ROADMAP ═══════ */
+        .roadmap { padding: 8rem 0; border-top: 1px solid rgba(185, 154, 115, 0.2); }
+        .roadmap-container { max-width: 800px; margin: 0 auto; position: relative; }
+        .roadmap-container::before {
+            content: ''; position: absolute; top: 0; left: 30px;
+            height: 100%; width: 1px;
+            background: rgba(185, 154, 115, 0.3);
+            /* Line draw animation */
+            transform-origin: top center;
+            transform: scaleY(0);
+            transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .roadmap-container.line-drawn::before { transform: scaleY(1); }
+        .road-step { position: relative; padding-left: 80px; margin-bottom: 4rem; }
+        .step-dot {
+            position: absolute; left: 24px; top: 5px;
+            width: 13px; height: 13px;
+            background: var(--navy); border: 2px solid var(--beige); border-radius: 50%; z-index: 2;
+        }
+        .road-step.active .step-dot { background: var(--beige); box-shadow: 0 0 15px var(--beige); }
+        .road-step h4 { color: var(--beige); margin-bottom: 0.5rem; font-size: 1.5rem; }
+        .road-step span {
+            display: block; font-size: 0.85rem; color: rgba(255,255,255,0.5);
+            margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px; font-family: 'Space Grotesk';
+        }
+
+        /* ═══════ FOUNDER TIMELINE ═══════ */
+        .founder { padding: 7rem 0; position: relative; }
+        .founder-intro { max-width: 650px; margin: 0 auto 4.5rem; text-align: center; }
+        .founder-intro span.f-kicker {
+            display: inline-block; font-family: 'Space Grotesk'; font-size: 0.8rem;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--beige-dark); margin-bottom: 0.8rem; font-weight: 600;
+        }
+        .founder-intro h2 { font-size: 2.6rem; color: var(--navy); line-height: 1.15; }
+
+        .founder-timeline { max-width: 760px; margin: 0 auto; position: relative; }
+        .founder-timeline::before {
+            content: ''; position: absolute; top: 6px; left: 30px;
+            height: 100%; width: 1px;
+            background: rgba(0, 0, 128, 0.18);
+            transform-origin: top center; transform: scaleY(0);
+            transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .founder-timeline.line-drawn::before { transform: scaleY(1); }
+        .f-step { position: relative; padding-left: 80px; margin-bottom: 3.5rem; }
+        .f-step:last-child { margin-bottom: 0; }
+        .f-step .step-dot { position: absolute; left: 24px; top: 6px; width: 13px; height: 13px; background: var(--beige); border: 2px solid var(--navy); border-radius: 50%; z-index: 2; transition: box-shadow 0.4s ease; }
+        .f-step.active .step-dot { box-shadow: 0 0 0 5px rgba(0,0,128,0.08); }
+        .f-eyebrow {
+            display: block; font-size: 0.78rem; color: var(--beige-dark); text-transform: uppercase;
+            letter-spacing: 2px; font-family: 'Space Grotesk'; margin-bottom: 0.6rem; font-weight: 600;
+        }
+        .f-step h4 { color: var(--navy); font-size: 1.45rem; margin-bottom: 0.8rem; }
+        .f-step p { color: rgba(0, 0, 128, 0.78); font-size: 0.98rem; max-width: 560px; }
+        .f-step .vision {
+            font-size: 1.55rem; line-height: 1.45; color: var(--navy); margin-bottom: 1.2rem;
+            font-family: 'Space Grotesk'; font-weight: 500; max-width: 580px;
+        }
+        .f-step .quote-icon { font-size: 4.5rem; font-family: serif; color: var(--navy); opacity: 0.18; line-height: 0; display: block; margin-bottom: -0.3rem; }
+
+        .f-founder-info {
+            margin-top: 1.6rem; padding-top: 1.6rem;
+            border-top: 1px solid rgba(0, 0, 128, 0.18);
+            max-width: 560px;
+        }
+        .f-founder-info h3 { color: var(--navy); font-size: 1.4rem; }
+        .f-founder-info > span { color: var(--beige-dark); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Contact links */
+        .contact-links { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .contact-link {
+            display: flex; align-items: center; gap: 0.6rem;
+            color: rgba(0, 0, 128, 0.75); text-decoration: none;
+            font-size: 0.85rem; font-family: 'Inter', sans-serif;
+            transition: color 0.3s ease; word-break: break-all; cursor: none;
+        }
+        .contact-link:hover { color: var(--navy); }
+        .contact-icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+        /* ═══════ FOOTER ═══════ */
+        footer { padding: 4rem 0 2rem; text-align: center; border-top: 1px solid rgba(185, 154, 115, 0.2); }
+        .footer-logo { justify-content: center; display: inline-flex; font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .footer-logo .brand-icon { width: 40px; }
+
+        /* ═══════ SCROLL ANIMATIONS ═══════ */
+        .fade-up { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--ease); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* ═══════ REDUCED MOTION ═══════ */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .fade-up { transition: opacity 0.3s ease; transform: none !important; }
+            #spotlight, .vitals-strip, .hero-hud { display: none !important; }
+            .badge-dot, .ai-thinking span { animation: none !important; }
+        }
+
+        /* ═══════ MOBILE ═══════ */
+        @media (max-width: 900px) {
+            body { cursor: auto; }
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none; position: absolute; top: 100%; left: 0; width: 100%;
+                background: rgba(0, 0, 128, 0.97); backdrop-filter: blur(12px);
+                padding: 1.5rem 2rem; border-bottom: 1px solid rgba(185, 154, 115, 0.2);
+                flex-direction: column; gap: 1rem;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a { margin-left: 0; font-size: 1.1rem; padding: 0.5rem 0; cursor: auto; }
+            .why-grid { grid-template-columns: 1fr; }
+            .ecosystem-flow { flex-direction: column; gap: 3rem; }
+            .flow-line { display: none; }
+            .veridex-grid { grid-template-columns: 1fr; }
+            .report-score { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .founder-timeline::before { left: 24px; }
+            .f-step { padding-left: 64px; }
+            .f-step .step-dot { left: 18px; }
+            .hero h1 { font-size: 2.8rem; }
+            .btn { cursor: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient mouse-reactive spotlight -->
+    <div id="spotlight"></div>
+
+    <!-- Scroll progress bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Custom cursor elements -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- Story rail: the diagnostic journey of the page -->
+    <nav class="story-rail" id="story-rail" aria-hidden="true">
+        <div class="rail-line"><div class="rail-fill" id="rail-fill"></div></div>
+        <ul>
+            <li data-target="why"><span class="rail-dot"></span><span class="rail-label">Problem</span></li>
+            <li data-target="ecosystem"><span class="rail-dot"></span><span class="rail-label">Diagnosis</span></li>
+            <li data-target="veridex"><span class="rail-dot"></span><span class="rail-label">Detection</span></li>
+            <li data-target="roadmap-section"><span class="rail-dot"></span><span class="rail-label">Solution</span></li>
+            <li data-target="founder"><span class="rail-dot"></span><span class="rail-label">Growth</span></li>
+        </ul>
+    </nav>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <div class="container nav-inner">
+            <a href="#" class="brand">
+                <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="brand-icon" shape-rendering="crispEdges">
+                    <rect x="0" y="10" width="12" height="1" fill="currentColor"/>
+                    <rect x="0" y="8" width="1" height="1" fill="currentColor"/>
+                    <rect x="1" y="7" width="1" height="1" fill="currentColor"/>
+                    <rect x="2" y="6" width="1" height="1" fill="currentColor"/>
+                    <rect x="3" y="5" width="1" height="1" fill="currentColor"/>
+                    <rect x="4" y="6" width="1" height="1" fill="currentColor"/>
+                    <rect x="5" y="7" width="1" height="1" fill="currentColor"/>
+                    <rect x="6" y="6" width="1" height="1" fill="currentColor"/>
+                    <rect x="7" y="5" width="1" height="1" fill="currentColor"/>
+                    <rect x="8" y="4" width="1" height="1" fill="currentColor"/>
+                    <rect x="9" y="3" width="1" height="1" fill="currentColor"/>
+                    <rect x="10" y="2" width="1" height="1" fill="currentColor"/>
+                    <rect x="11" y="1" width="1" height="1" fill="currentColor"/>
+                    <rect x="9" y="1" width="1" height="1" fill="currentColor"/>
+                    <rect x="10" y="1" width="1" height="1" fill="currentColor"/>
+                    <rect x="11" y="2" width="1" height="1" fill="currentColor"/>
+                    <rect x="11" y="3" width="1" height="1" fill="currentColor"/>
+                </svg>
+                AsEdge
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="#why">Vision</a>
+                <a href="#ecosystem">The Process</a>
+                <a href="#veridex">Veridex</a>
+                <a href="#founder">Founder</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg-layer"></div>
+        <canvas id="hero-canvas"></canvas>
+
+        <!-- Diagnostic atmosphere: EKG baseline that scrolls from erratic to stable -->
+        <div class="vitals-strip" aria-hidden="true">
+            <svg viewBox="0 0 600 110" preserveAspectRatio="none">
+                <path id="ekg-erratic" class="ekg-erratic" d="M0,60 L40,60 L55,25 L70,90 L85,45 L100,60 L160,60 L175,18 L190,85 L205,50 L220,60 L300,60 L315,28 L330,80 L345,60 L420,60 L435,20 L450,82 L465,60 L540,60 L555,33 L570,68 L600,60"/>
+                <path id="ekg-stable" class="ekg-stable" d="M0,62 L60,62 L100,48 L160,50 L220,38 L300,36 L380,24 L460,22 L540,14 L600,12"/>
+            </svg>
+            <div class="scan-beam" id="scan-beam"></div>
+        </div>
+
+        <!-- Diagnostic atmosphere: live HUD readout, desktop only -->
+        <div class="hero-hud" aria-hidden="true">
+            <div class="hud-status" id="hero-status-label">System Idle</div>
+            <div class="metric-chip" data-metric="cashflow">
+                <span class="m-label">Cash Flow</span>
+                <span class="m-value"><span class="m-arrow">▼</span> 18%</span>
+            </div>
+            <div class="metric-chip" data-metric="churn">
+                <span class="m-label">Customer Churn</span>
+                <span class="m-value"><span class="m-arrow">▲</span> 7.2%</span>
+            </div>
+            <div class="metric-chip" data-metric="inventory">
+                <span class="m-label">Inventory Turnover</span>
+                <span class="m-value"><span class="m-arrow">▼</span> 2.1x</span>
+            </div>
+        </div>
+
+        <div class="container hero-content">
+            <div class="fade-up tagline-label">A Higher Edge For All</div>
+            <h1 class="fade-up" style="transition-delay: 0.1s;">
+                Businesses need <span id="scramble-target">health checkups</span> too.
+            </h1>
+            <p class="fade-up" style="transition-delay: 0.2s;">Every business deserves the opportunity to reach its full potential. We are building AsEdge—a growth ecosystem designed to identify hidden risks, solve operational bottlenecks, and map the pathways to a healthier business.</p>
+            <div class="hero-actions fade-up" style="transition-delay: 0.3s;">
+                <a href="#veridex" class="btn btn-primary">See What We're Building</a>
+                <a href="#ecosystem" class="btn btn-secondary">Explore the Vision</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY NOW -->
+    <section id="why" class="why-now beige-section">
+        <div class="container">
+            <div class="why-header fade-up">
+                <h2>Treating the root cause, not the symptoms.</h2>
+                <p>A doctor doesn't guess what's wrong with a patient; they run a diagnosis. Why should businesses operate any differently? We are building a system to illuminate the blind spots that prevent growth.</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card fade-up" style="transition-delay: 0.1s;">
+                    <div class="why-content">
+                        <div class="why-icon">🩺</div>
+                        <h3>Misdiagnosed Symptoms</h3>
+                        <p>Most businesses treat surface-level pain—like declining sales or high costs—without ever understanding the underlying disease in their model. True growth requires precise diagnosis.</p>
+                    </div>
+                </div>
+                <div class="why-card fade-up" style="transition-delay: 0.2s;">
+                    <div class="why-content">
+                        <div class="why-icon">🛑</div>
+                        <h3>Hidden Bottlenecks</h3>
+                        <p>A business cannot reach its full potential if its momentum is stifled by unseen operational constraints. We aim to map the entire organism to find where the friction lies.</p>
+                    </div>
+                </div>
+                <div class="why-card fade-up" style="transition-delay: 0.3s;">
+                    <div class="why-content">
+                        <div class="why-icon">🌱</div>
+                        <h3>Untapped Potential</h3>
+                        <p>Growth is a byproduct of organizational health. When a business understands its internal mechanics, it gains the clarity required to scale confidently and sustainably.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SIGNATURE EXPERIENCE -->
+    <section id="ecosystem" class="signature-experience navy-section">
+        <div class="container">
+            <div class="sig-header fade-up">
+                <h2>The Pathway to Peak Health</h2>
+                <p style="color: var(--beige-light); max-width: 600px; margin: 0 auto;">Our foundational belief: unlocking business growth follows a definitive biological structure. This is the process we are building AsEdge to execute.</p>
+            </div>
+            <div class="ecosystem-flow fade-up" style="transition-delay: 0.2s;">
+                <div class="flow-line"><div class="flow-line-active" id="flow-progress"></div></div>
+                <div class="node-wrapper" data-flow="0">
+                    <div class="node-circle"><span style="font-size: 1.5rem;">📋</span></div>
+                    <div class="node-title">Business Assessment</div>
+                    <div class="node-desc">Taking vital signs to map the current state of the organization.</div>
+                </div>
+                <div class="node-wrapper" data-flow="25">
+                    <div class="node-circle"><span style="font-size: 1.5rem;">🔬</span></div>
+                    <div class="node-title">Diagnosis</div>
+                    <div class="node-desc">Analyzing metrics and workflows to find structural misalignments.</div>
+                </div>
+                <div class="node-wrapper" data-flow="50">
+                    <div class="node-circle"><span style="font-size: 1.5rem;">⚠️</span></div>
+                    <div class="node-title">Problem Detection</div>
+                    <div class="node-desc">Highlighting hidden risks and defining specific bottlenecks.</div>
+                </div>
+                <div class="node-wrapper" data-flow="75">
+                    <div class="node-circle"><span style="font-size: 1.5rem;">🗺️</span></div>
+                    <div class="node-title">Solution Pathways</div>
+                    <div class="node-desc">Prescribing the resources, strategy, and interventions required.</div>
+                </div>
+                <div class="node-wrapper" data-flow="100">
+                    <div class="node-circle"><span style="font-size: 1.5rem;">📈</span></div>
+                    <div class="node-title">Business Growth</div>
+                    <div class="node-desc">Restoring health and accelerating toward peak potential.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VERIDEX -->
+    <section id="veridex" class="veridex split-bg-navy-beige">
+        <div class="container">
+            <div class="veridex-grid">
+                <div class="veridex-text fade-up">
+                    <span class="badge"><div class="badge-dot"></div> Concept in Development</span>
+                    <h2>Project Veridex</h2>
+                    <p style="margin-top: 1.5rem; font-size: 1.15rem; font-weight: 300;">The first step in the AsEdge journey. A conceptual diagnostic tool engineered to read the health of an entire business.</p>
+                    <p style="margin-top: 1rem; color: var(--beige-light);">Instead of acting as a generic software interface, Veridex is being built as the "doctor" in our ecosystem. By integrating operational, financial, and marketing variables, it aims to uncover the hidden risks that founders can't see.</p>
+                    <ul style="margin-top: 2rem; list-style: none; color: var(--beige-light);">
+                        <li style="margin-bottom: 1rem; border-left: 2px solid var(--beige); padding-left: 1rem;">
+                            <strong style="color: var(--white); font-family: 'Space Grotesk';">Diagnostic Reading</strong><br>
+                            Evaluating different functional branches of a business holistically.
+                        </li>
+                        <li style="margin-bottom: 1rem; border-left: 2px solid var(--beige); padding-left: 1rem;">
+                            <strong style="color: var(--white); font-family: 'Space Grotesk';">Risk Visualization</strong><br>
+                            Pinpointing exactly where a company is constrained or bleeding resources.
+                        </li>
+                    </ul>
+                    <p style="margin-top: 2rem; font-size: 0.82rem; color: rgba(255,255,255,0.4);">The simulation alongside is illustrative of how Veridex will reason — it does not yet run on live business data.</p>
+                </div>
+
+                <div class="veridex-ui fade-up" style="transition-delay: 0.2s;">
+                    <div class="ui-header">
+                        <span class="ui-title">Veridex Diagnostic Simulation</span>
+                        <span class="ui-live-tag" id="demo-status">Idle</span>
+                    </div>
+
+                    <!-- Stage 1: Intro / call to action -->
+                    <div class="demo-stage" id="demo-intro">
+                        <p class="demo-copy">Click below to see how Veridex would scan a business across four core systems and generate a diagnostic read-out.</p>
+                        <button class="btn btn-primary demo-run-btn" id="run-diagnosis">Run Business Diagnosis</button>
+                    </div>
+
+                    <!-- Stage 2: Scanning -->
+                    <div class="demo-stage" id="demo-scan" hidden>
+                        <div class="scan-row" data-key="financial">
+                            <div class="scan-row-top"><span>Financial Analysis</span><span class="scan-pct">0%</span></div>
+                            <div class="scan-bar"><span class="scan-bar-fill"></span></div>
+                            <div class="scan-result"></div>
+                        </div>
+                        <div class="scan-row" data-key="operations">
+                            <div class="scan-row-top"><span>Operations Analysis</span><span class="scan-pct">0%</span></div>
+                            <div class="scan-bar"><span class="scan-bar-fill"></span></div>
+                            <div class="scan-result"></div>
+                        </div>
+                        <div class="scan-row" data-key="marketing">
+                            <div class="scan-row-top"><span>Marketing Analysis</span><span class="scan-pct">0%</span></div>
+                            <div class="scan-bar"><span class="scan-bar-fill"></span></div>
+                            <div class="scan-result"></div>
+                        </div>
+                        <div class="scan-row" data-key="growth">
+                            <div class="scan-row-top"><span>Growth Analysis</span><span class="scan-pct">0%</span></div>
+                            <div class="scan-bar"><span class="scan-bar-fill"></span></div>
+                            <div class="scan-result"></div>
+                        </div>
+                        <div class="ai-thinking" id="ai-thinking" hidden><span></span><span></span><span></span> Synthesizing diagnostic report…</div>
+                    </div>
+
+                    <!-- Stage 3: Report -->
+                    <div class="demo-stage" id="demo-report" hidden>
+                        <div class="report-score">
+                            <div class="score-ring-wrap">
+                                <svg class="score-ring" viewBox="0 0 120 120">
+                                    <circle class="score-ring-track" cx="60" cy="60" r="52"></circle>
+                                    <circle class="score-ring-fill" id="score-ring-fill" cx="60" cy="60" r="52" stroke="#B99A73"></circle>
+                                </svg>
+                                <div class="score-num"><span id="score-value">0</span><small>/100</small></div>
+                            </div>
+                            <div>
+                                <div class="score-text-label" id="score-label">Business Health</div>
+                            </div>
+                        </div>
+
+                        <div class="report-risks" id="report-risks"></div>
+
+                        <div class="risk-alert" id="primary-bottleneck"></div>
+
+                        <div class="report-growth">
+                            <div class="widget-title" style="font-family:'Space Grotesk'; font-size:0.8rem; color: var(--beige-light); text-transform:uppercase; letter-spacing:1px;">Projected Trajectory</div>
+                            <svg id="growth-chart" viewBox="0 0 300 100" preserveAspectRatio="none"></svg>
+                            <div class="chart-legend">
+                                <span><span class="legend-dot risk"></span> If left unaddressed</span>
+                                <span><span class="legend-dot good"></span> If treated with AsEdge</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-secondary" id="rerun-diagnosis">Run Diagnosis Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap-section" class="roadmap navy-section">
+        <div class="container">
+            <div class="fade-up" style="text-align: center; margin-bottom: 5rem;">
+                <h2>Building The Ecosystem</h2>
+                <p style="color: var(--beige-light);">We are taking a deliberate, research-first approach to solving a massive problem.</p>
+            </div>
+            <div class="roadmap-container" id="roadmap-container">
+                <div class="road-step fade-up">
+                    <div class="step-dot"></div>
+                    <span>Phase 1 • Research</span>
+                    <h4>Understanding the Problem</h4>
+                    <p style="color: #aaa;">Immersing in the real reasons businesses fail to scale, mapping how problems cascade across financial and operational departments.</p>
+                </div>
+                <div class="road-step active fade-up">
+                    <div class="step-dot"></div>
+                    <span>Phase 2 • Currently Building</span>
+                    <h4>Developing Veridex Diagnostics</h4>
+                    <p style="color: var(--beige-light);">Transforming our research hypothesis into a functional prototype capable of accurately assessing a business's health state.</p>
+                </div>
+                <div class="road-step fade-up">
+                    <div class="step-dot"></div>
+                    <span>Phase 3 • Future Ecosystem</span>
+                    <h4>Access to Cures</h4>
+                    <p style="color: #aaa;">Beyond just diagnosing the problem, building the network and resources to prescribe the solution and execute growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUNDER TIMELINE -->
+    <section id="founder" class="founder beige-section">
+        <div class="container">
+            <div class="founder-intro fade-up">
+                <span class="f-kicker">The Person Behind The Diagnosis</span>
+                <h2>Why This, Why Now, Why Me.</h2>
+            </div>
+
+            <div class="founder-timeline" id="founder-timeline">
+
+                <div class="f-step fade-up">
+                    <div class="step-dot"></div>
+                    <span class="f-eyebrow">The Problem</span>
+                    <h4>Why AsEdge Exists</h4>
+                    <p>I kept meeting founders with strong ideas and weak odds — not because the idea was flawed, but because execution, resources, or clarity ran out first. AsEdge exists to close that gap, starting with a simple question every business should be able to answer: where, exactly, is the friction?</p>
+                </div>
+
+                <div class="f-step fade-up" style="transition-delay: 0.1s;">
+                    <div class="step-dot"></div>
+                    <span class="f-eyebrow">Who's Building It</span>
+                    <span class="quote-icon">"</span>
+                    <p class="vision">"No business idea is bad, the reason a business idea fails is because of lack of resources and execution. This is where AsEdge steps in."</p>
+                    <p>I don't claim to have all the answers. I am a student founder and an intensely curious learner building a laboratory to study what makes organizations thrive. AsEdge is not a consulting firm; it's a mission born out of a simple belief: if we can diagnose the barriers holding a business back, we can unlock its true potential.</p>
+
+                    <div class="f-founder-info">
+                        <span>Student Builder</span>
+                        <h3>Yuvraj Labh</h3>
+                        <p style="margin-top: 0.5rem; color: rgba(0,0,128,0.7); font-size: 0.9rem;">Founder, AsEdge</p>
+                        <div class="contact-links">
+                            <!-- Gmail -->
+                            <a href="mailto:contact.asedge.in@gmail.com" class="contact-link">
+                                <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
+                                </svg>
+                                contact.asedge.in@gmail.com
+                            </a>
+                            <!-- Instagram -->
+                            <a href="https://instagram.com/asedge.in" class="contact-link" target="_blank" rel="noopener noreferrer">
+                                <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                            <stop offset="0%"   stop-color="#f09433"/>
+                                            <stop offset="25%"  stop-color="#e6683c"/>
+                                            <stop offset="50%"  stop-color="#dc2743"/>
+                                            <stop offset="75%"  stop-color="#cc2366"/>
+                                            <stop offset="100%" stop-color="#bc1888"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path fill="url(#ig-grad)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                                </svg>
+                                @asedge.in
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="f-step fade-up" style="transition-delay: 0.2s;">
+                    <div class="step-dot"></div>
+                    <span class="f-eyebrow">Where We Are Now</span>
+                    <h4>Building Veridex</h4>
+                    <p>Right now, the work is heads-down: turning a research hypothesis into a working prototype that can actually read a business's vital signs across finance, operations, marketing, and growth — the same diagnostic logic you can try in the simulation above.</p>
+                </div>
+
+                <div class="f-step fade-up" style="transition-delay: 0.3s;">
+                    <div class="step-dot"></div>
+                    <span class="f-eyebrow">Where We're Headed</span>
+                    <h4>The Ecosystem Ahead</h4>
+                    <p>Diagnosis is only step one. The longer-term vision is a full ecosystem — talent, systems, partnerships, and execution support — that doesn't just tell a business what's wrong, but helps fix it. A higher edge, for all.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="navy-section">
+        <div class="container">
+            <a href="#" class="brand footer-logo">
+                <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="brand-icon" shape-rendering="crispEdges">
+                    <rect x="0" y="10" width="12" height="1" fill="currentColor"/>
+                    <rect x="0" y="8" width="1" height="1" fill="currentColor"/>
+                    <rect x="1" y="7" width="1" height="1" fill="currentColor"/>
+                    <rect x="2" y="6" width="1" height="1" fill="currentColor"/>
+                    <rect x="3" y="5" width="1" height="1" fill="currentColor"/>
+                    <rect x="4" y="6" width="1" height="1" fill="currentColor"/>
+                    <rect x="5" y="7" width="1" height="1" fill="currentColor"/>
+                    <rect x="6" y="6" width="1" height="1" fill="currentColor"/>
+                    <rect x="7" y="5" width="1" height="1" fill="currentColor"/>
+                    <rect x="8" y="4" width="1" height="1" fill="currentColor"/>
+                    <rect x="9" y="3" width="1" height="1" fill="currentColor"/>
+                    <rect x="10" y="2" width="1" height="1" fill="currentColor"/>
+                    <rect x="11" y="1" width="1" height="1" fill="currentColor"/>
+                    <rect x="9" y="1" width="1" height="1" fill="currentColor"/>
+                    <rect x="10" y="1" width="1" height="1" fill="currentColor"/>
+                    <rect x="11" y="2" width="1" height="1" fill="currentColor"/>
+                    <rect x="11" y="3" width="1" height="1" fill="currentColor"/>
+                </svg>
+                AsEdge
+            </a>
+            <p style="color: var(--beige-light); font-size: 0.95rem; margin-bottom: 1rem; font-family: 'Space Grotesk'; text-transform: uppercase; letter-spacing: 2px;">A Higher Edge For All</p>
+            <p style="color: rgba(255,255,255,0.3); font-size: 0.8rem;">&copy; 2026 AsEdge. Project Veridex is currently a concept in early development.</p>
+        </div>
+    </footer>
+
+    <!-- GSAP (ScrollTrigger) — used for the hero scroll-story and diagnostic demo animations.
+         Everything is feature-detected below: if this CDN fails to load (offline / blocked),
+         the site still works, just with simpler CSS-only transitions. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+    'use strict';
+
+    const hasGSAP = (typeof window.gsap !== 'undefined') && (typeof window.ScrollTrigger !== 'undefined');
+    if (hasGSAP) gsap.registerPlugin(ScrollTrigger);
+
+    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wait = ms => new Promise(r => setTimeout(r, prefersReduced ? Math.min(ms, 150) : ms));
+
+    // ═══════════════════════════════════════════════════════
+    // 1. SCROLL PROGRESS BAR + NAVBAR
+    // ═══════════════════════════════════════════════════════
+    const scrollBar = document.getElementById('scroll-progress');
+    const navbar    = document.getElementById('navbar');
+
+    window.addEventListener('scroll', () => {
+        const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+        scrollBar.style.width = pct.toFixed(2) + '%';
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // ═══════════════════════════════════════════════════════
+    // 2. HAMBURGER MENU
+    // ═══════════════════════════════════════════════════════
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open);
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', false);
+        });
+    });
+
+    // ═══════════════════════════════════════════════════════
+    // 3. CUSTOM CURSOR + AMBIENT SPOTLIGHT (desktop only)
+    // ═══════════════════════════════════════════════════════
+    if (!isTouch) {
+        const dot  = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mx = -300, my = -300, rx = -300, ry = -300;
+        const spotlight = document.getElementById('spotlight');
+        if (!prefersReduced) spotlight.classList.add('active');
+
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            dot.style.left = mx + 'px';
+            dot.style.top  = my + 'px';
+            if (!prefersReduced) {
+                document.documentElement.style.setProperty('--mx', mx + 'px');
+                document.documentElement.style.setProperty('--my', my + 'px');
+            }
+        }, { passive: true });
+
+        // Lagging ring via lerp
+        (function lerpRing() {
+            rx += (mx - rx) * 0.1;
+            ry += (my - ry) * 0.1;
+            ring.style.left = rx + 'px';
+            ring.style.top  = ry + 'px';
+            requestAnimationFrame(lerpRing);
+        })();
+
+        // Expand cursor on interactive elements (re-run after dynamic content is added)
+        function bindCursorTargets() {
+            document.querySelectorAll('a, button, .why-card, .node-wrapper, .btn, .story-rail li').forEach(el => {
+                if (el.dataset.cursorBound) return;
+                el.dataset.cursorBound = '1';
+                el.addEventListener('mouseenter', () => { dot.classList.add('hovering');  ring.classList.add('hovering');  });
+                el.addEventListener('mouseleave', () => { dot.classList.remove('hovering'); ring.classList.remove('hovering'); });
+            });
+        }
+        bindCursorTargets();
+        window.__bindCursorTargets = bindCursorTargets;
+    }
+
+    // Spotlight needs CSS var units to be 'px' not '%', so fix unit usage (defined in :root as %25 fallback)
+    document.documentElement.style.setProperty('--mx', '50vw');
+    document.documentElement.style.setProperty('--my', '50vh');
+
+    // ═══════════════════════════════════════════════════════
+    // 4. HERO PARTICLE CANVAS (color shifts with diagnostic progress)
+    // ═══════════════════════════════════════════════════════
+    let heroProgress = 0; // 0 = declining/erratic, 1 = stabilized/healthy
+
+    (function initParticles() {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let W, H, particles, raf, running = true;
+        const LINK = 145;
+        const mouse = { x: -999, y: -999 };
+
+        function lerp(a, b, t) { return a + (b - a) * t; }
+        function particleColor(alpha) {
+            // amber/red (stressed) -> beige (neutral) -> soft green (healthy)
+            const stops = [
+                [255, 107, 94],   // 0.0 stressed
+                [185, 154, 115],  // 0.55 neutral/brand
+                [140, 200, 150],  // 1.0 healthy
+            ];
+            let t = Math.max(0, Math.min(1, heroProgress));
+            let c1, c2, localT;
+            if (t < 0.55) { c1 = stops[0]; c2 = stops[1]; localT = t / 0.55; }
+            else { c1 = stops[1]; c2 = stops[2]; localT = (t - 0.55) / 0.45; }
+            const r = Math.round(lerp(c1[0], c2[0], localT));
+            const g = Math.round(lerp(c1[1], c2[1], localT));
+            const b = Math.round(lerp(c1[2], c2[2], localT));
+            return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+        }
+
+        function resize() {
+            W = canvas.width  = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+        }
+
+        function spawn() {
+            const cap = (isTouch || prefersReduced) ? 28 : 80;
+            const n = Math.min(Math.floor((W * H) / 14000), cap);
+            particles = Array.from({ length: n }, () => ({
+                x:  Math.random() * W,
+                y:  Math.random() * H,
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: (Math.random() - 0.5) * 0.35,
+                r:  Math.random() * 1.4 + 0.7,
+                a:  Math.random() * 0.35 + 0.15,
+            }));
+        }
+
+        function draw() {
+            if (!running) return;
+            ctx.clearRect(0, 0, W, H);
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+
+                const dx = p.x - mouse.x, dy = p.y - mouse.y;
+                const d2 = dx * dx + dy * dy;
+                if (d2 < 14400) {
+                    const d = Math.sqrt(d2);
+                    const f = (120 - d) / 120 * 0.035;
+                    p.vx += (dx / d) * f;
+                    p.vy += (dy / d) * f;
+                }
+
+                const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                if (spd > 1.0) { p.vx /= spd; p.vy /= spd; }
+
+                p.x = (p.x + p.vx + W) % W;
+                p.y = (p.y + p.vy + H) % H;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+                ctx.fillStyle = particleColor(p.a);
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const q  = particles[j];
+                    const ex = p.x - q.x, ey = p.y - q.y;
+                    const ed = Math.sqrt(ex * ex + ey * ey);
+                    if (ed < LINK) {
+                        const alpha = (1 - ed / LINK) * 0.13;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(q.x, q.y);
+                        ctx.strokeStyle = particleColor(alpha);
+                        ctx.lineWidth   = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            raf = requestAnimationFrame(draw);
+        }
+
+        function init() {
+            cancelAnimationFrame(raf);
+            resize();
+            spawn();
+            running = true;
+            draw();
+            setTimeout(() => { canvas.style.opacity = '1'; }, 80);
+        }
+
+        const hero = document.querySelector('.hero');
+        hero.addEventListener('mousemove', e => {
+            const r  = canvas.getBoundingClientRect();
+            mouse.x  = e.clientX - r.left;
+            mouse.y  = e.clientY - r.top;
+        }, { passive: true });
+        hero.addEventListener('mouseleave', () => { mouse.x = mouse.y = -999; });
+
+        window.addEventListener('resize', () => { init(); }, { passive: true });
+
+        // Pause the canvas loop entirely once the hero scrolls out of view — saves CPU/battery.
+        new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                running = entry.isIntersecting;
+                if (running) draw();
+                else cancelAnimationFrame(raf);
+            });
+        }, { threshold: 0 }).observe(hero);
+
+        init();
+    })();
+
+    // ═══════════════════════════════════════════════════════
+    // 5. TEXT SCRAMBLE on "health checkups"
+    // ═══════════════════════════════════════════════════════
+    (function scramble() {
+        const el = document.getElementById('scramble-target');
+        if (!el) return;
+        if (prefersReduced) { el.textContent = 'health checkups'; return; }
+        const FINAL  = 'health checkups';
+        const CHARS  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%!?';
+        const FRAMES = 30;
+        let frame = 0;
+
+        setTimeout(() => {
+            const iv = setInterval(() => {
+                let out = '';
+                for (let i = 0; i < FINAL.length; i++) {
+                    const resolveAt = Math.floor((i / FINAL.length) * (FRAMES - 4));
+                    if (frame >= resolveAt) {
+                        out += FINAL[i];
+                    } else if (FINAL[i] === ' ') {
+                        out += ' ';
+                    } else {
+                        out += '<span class="sc">' + CHARS[Math.floor(Math.random() * CHARS.length)] + '</span>';
+                    }
+                }
+                el.innerHTML = out;
+                if (++frame > FRAMES) {
+                    clearInterval(iv);
+                    el.textContent = FINAL;
+                }
+            }, 45);
+        }, 900);
+    })();
+
+    // ═══════════════════════════════════════════════════════
+    // 6. MAGNETIC BUTTONS (desktop only)
+    // ═══════════════════════════════════════════════════════
+    if (!isTouch && !prefersReduced) {
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const r  = btn.getBoundingClientRect();
+                const ox = (e.clientX - r.left - r.width  / 2) * 0.22;
+                const oy = (e.clientY - r.top  - r.height / 2) * 0.22;
+                btn.style.transform  = 'translate(' + ox + 'px,' + oy + 'px)';
+                btn.style.transition = 'transform 0.1s ease';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform  = '';
+                btn.style.transition = 'transform 0.55s cubic-bezier(0.77,0,0.175,1), background-color 0.4s, color 0.4s, border-color 0.4s';
+            });
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // 7. 3D CARD TILT on why-cards (desktop only)
+    // ═══════════════════════════════════════════════════════
+    if (!isTouch && !prefersReduced) {
+        document.querySelectorAll('.why-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const r  = card.getBoundingClientRect();
+                const nx = (e.clientX - r.left  - r.width  / 2) / (r.width  / 2);
+                const ny = (e.clientY - r.top   - r.height / 2) / (r.height / 2);
+                const rx = -ny * 7;
+                const ry =  nx * 7;
+                card.style.transform  = 'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(8px)';
+                card.style.transition = 'transform 0.08s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform  = '';
+                card.style.transition = 'transform 0.6s cubic-bezier(0.77,0,0.175,1)';
+            });
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // 8. INTERSECTION OBSERVER — fade-up + line draws
+    // ═══════════════════════════════════════════════════════
+    const fadeObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                fadeObs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+    [['roadmap-container'], ['founder-timeline']].forEach(([id]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) el.classList.add('line-drawn');
+        }, { threshold: 0.25 }).observe(el);
+    });
+
+    // ═══════════════════════════════════════════════════════
+    // 9. ECOSYSTEM FLOW PROGRESS BAR
+    // ═══════════════════════════════════════════════════════
+    function updateFlow(pct) {
+        const bar = document.getElementById('flow-progress');
+        if (bar && window.innerWidth > 900) bar.style.width = pct + '%';
+    }
+    document.querySelectorAll('.node-wrapper[data-flow]').forEach(node => {
+        node.addEventListener('mouseenter', () => updateFlow(node.dataset.flow));
+    });
+
+    // ═══════════════════════════════════════════════════════
+    // 10. STORY RAIL — tracks which "chapter" of the diagnosis is in view
+    // ═══════════════════════════════════════════════════════
+    (function storyRail() {
+        const rail = document.getElementById('story-rail');
+        if (!rail) return;
+        const items = [...rail.querySelectorAll('li')];
+        const fill  = document.getElementById('rail-fill');
+        const sections = items.map(li => document.getElementById(li.dataset.target)).filter(Boolean);
+
+        items.forEach(li => li.addEventListener('click', () => {
+            const target = document.getElementById(li.dataset.target);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }));
+
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const idx = sections.indexOf(entry.target);
+                if (idx === -1) return;
+                items.forEach(li => li.classList.remove('active'));
+                items[idx].classList.add('active');
+                fill.style.height = (idx / (items.length - 1) * 100) + '%';
+            });
+        }, { threshold: 0.4 });
+
+        sections.forEach(s => obs.observe(s));
+    })();
+
+    // ═══════════════════════════════════════════════════════
+    // 11. HERO SCROLL-STORY (GSAP ScrollTrigger, desktop + motion-allowed only)
+    //     Tells: declining vitals → warning signals → Veridex scanning → stabilized
+    // ═══════════════════════════════════════════════════════
+    if (hasGSAP) {
+        const mm = gsap.matchMedia();
+        mm.add('(min-width: 1100px) and (prefers-reduced-motion: no-preference)', () => {
+            const statusLabel = document.getElementById('hero-status-label');
+            const erratic = document.getElementById('ekg-erratic');
+            const stable  = document.getElementById('ekg-stable');
+            const beam    = document.getElementById('scan-beam');
+            const chips   = document.querySelectorAll('.metric-chip');
+
+            const erraticLen = erratic.getTotalLength();
+            const stableLen  = stable.getTotalLength();
+            erratic.style.strokeDasharray = erraticLen;
+            erratic.style.strokeDashoffset = erraticLen;
+            stable.style.strokeDasharray = stableLen;
+            stable.style.strokeDashoffset = stableLen;
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: '+=140%',
+                    scrub: 0.5,
+                    pin: true,
+                    anticipatePin: 1,
+                    onUpdate: self => { heroProgress = self.progress; }
+                }
+            });
+
+            tl.call(() => { statusLabel.textContent = 'Reading Business Vitals…'; }, null, 0)
+              .to(erratic, { opacity: 1, duration: 0.4 }, 0)
+              .to(erratic, { strokeDashoffset: 0, duration: 2.2, ease: 'none' }, 0.2)
+              .to(chips, { opacity: 1, y: 0, scale: 1, stagger: 0.15, duration: 0.5 }, 0.3)
+              .call(() => { statusLabel.textContent = 'Warning Signals Detected'; }, null, 3.2)
+              .to(beam, { opacity: 1, duration: 0.3 }, 4.0)
+              .call(() => { statusLabel.textContent = 'Veridex Scanning…'; }, null, 4.0)
+              .fromTo(beam, { left: '0%' }, { left: '100%', duration: 2.6, ease: 'none' }, 4.2)
+              .to(beam, { opacity: 0, duration: 0.3 }, 6.7)
+              .call(() => {
+                  statusLabel.textContent = 'Business Stabilized';
+                  document.querySelector('[data-metric="cashflow"] .m-value').innerHTML = '<span class="m-arrow">▲</span> 24%';
+                  document.querySelector('[data-metric="churn"] .m-value').innerHTML = '<span class="m-arrow">▼</span> 2.4%';
+                  document.querySelector('[data-metric="inventory"] .m-value').innerHTML = '<span class="m-arrow">▲</span> 5.8x';
+                  chips.forEach(c => c.classList.add('healthy'));
+              }, null, 7.1)
+              .to(erratic, { opacity: 0, duration: 0.6 }, 7.1)
+              .to(stable, { opacity: 1, duration: 0.6 }, 7.1)
+              .fromTo(stable, { strokeDashoffset: stableLen }, { strokeDashoffset: 0, duration: 1.8, ease: 'none' }, 7.1);
+
+            return () => { tl.scrollTrigger && tl.scrollTrigger.kill(); tl.kill(); };
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // 12. INTERACTIVE VERIDEX DEMO — the centerpiece
+    // ═══════════════════════════════════════════════════════
+    (function veridexDemo() {
+        const runBtn     = document.getElementById('run-diagnosis');
+        const rerunBtn    = document.getElementById('rerun-diagnosis');
+        const statusTag  = document.getElementById('demo-status');
+        const stageIntro = document.getElementById('demo-intro');
+        const stageScan  = document.getElementById('demo-scan');
+        const stageReport= document.getElementById('demo-report');
+        const thinking   = document.getElementById('ai-thinking');
+        if (!runBtn) return;
+
+        const SCENARIOS = [
+            {
+                overallScore: 61,
+                categories: {
+                    financial:  { label: 'Financial',  score: 54, status: 'Cash flow strained by slow receivables', tier: 'warn' },
+                    operations: { label: 'Operations', score: 48, status: 'Inventory turnover bottleneck detected', tier: 'risk' },
+                    marketing:  { label: 'Marketing',  score: 71, status: 'Healthy acquisition, weak retention loop', tier: 'warn' },
+                    growth:     { label: 'Growth',     score: 66, status: 'Growth capped by working-capital limits', tier: 'warn' },
+                },
+                bottleneck: {
+                    title: 'Primary Bottleneck: Inventory Turnover',
+                    detail: 'Capital is currently trapped in slow-moving stock, severely limiting quarterly growth potential. Requires immediate strategic unblocking.'
+                },
+                growth: { unaddressed: [40, 38, 34, 30, 27, 24], treated: [40, 46, 54, 63, 74, 86] }
+            },
+            {
+                overallScore: 73,
+                categories: {
+                    financial:  { label: 'Financial',  score: 78, status: 'Strong margins, thin cash reserve', tier: 'good' },
+                    operations: { label: 'Operations', score: 69, status: 'Manual workflows slowing throughput', tier: 'warn' },
+                    marketing:  { label: 'Marketing',  score: 58, status: 'Rising acquisition cost, flat conversion', tier: 'warn' },
+                    growth:     { label: 'Growth',     score: 75, status: 'Healthy growth, fragile cost structure', tier: 'good' },
+                },
+                bottleneck: {
+                    title: 'Primary Bottleneck: Customer Acquisition Cost',
+                    detail: 'Marketing spend is rising faster than conversion, quietly compressing margin on every new customer acquired.'
+                },
+                growth: { unaddressed: [50, 53, 52, 49, 46, 44], treated: [50, 58, 68, 79, 91, 104] }
+            }
+        ];
+
+        function animateBar(fillEl, pctEl, target) {
+            return new Promise(resolve => {
+                if (hasGSAP) {
+                    gsap.to(fillEl, {
+                        width: target + '%',
+                        duration: prefersReduced ? 0.2 : 1.1,
+                        ease: 'power2.out',
+                        onUpdate() { pctEl.textContent = Math.round(parseFloat(fillEl.style.width) || 0) + '%'; },
+                        onComplete: resolve
+                    });
+                } else {
+                    fillEl.style.transition = 'width 1s ease-out';
+                    requestAnimationFrame(() => { fillEl.style.width = target + '%'; });
+                    const start = performance.now();
+                    (function step() {
+                        const p = Math.min((performance.now() - start) / 1000, 1);
+                        pctEl.textContent = Math.round(p * target) + '%';
+                        if (p < 1) requestAnimationFrame(step); else resolve();
+                    })();
+                }
+            });
+        }
+
+        function tweenNumber(el, target, duration) {
+            if (hasGSAP) {
+                const obj = { val: 0 };
+                gsap.to(obj, {
+                    val: target, duration, ease: 'power2.out',
+                    onUpdate() { el.textContent = Math.round(obj.val); }
+                });
+            } else {
+                el.textContent = target;
+            }
+        }
+
+        function drawGrowthChart(data) {
+            const svg = document.getElementById('growth-chart');
+            svg.innerHTML = '';
+            const w = 300, h = 100, pad = 8;
+            const all = data.unaddressed.concat(data.treated);
+            const max = Math.max(...all), min = Math.min(...all);
+            function toPoints(arr) {
+                return arr.map((v, i) => {
+                    const x = pad + i * ((w - 2 * pad) / (arr.length - 1));
+                    const y = h - pad - ((v - min) / ((max - min) || 1)) * (h - 2 * pad);
+                    return x + ',' + y;
+                }).join(' ');
+            }
+            const ns = 'http://www.w3.org/2000/svg';
+            const lineA = document.createElementNS(ns, 'polyline');
+            lineA.setAttribute('points', toPoints(data.unaddressed));
+            lineA.setAttribute('class', 'growth-line line-risk');
+            const lineB = document.createElementNS(ns, 'polyline');
+            lineB.setAttribute('points', toPoints(data.treated));
+            lineB.setAttribute('class', 'growth-line line-good');
+            svg.appendChild(lineA);
+            svg.appendChild(lineB);
+
+            [lineA, lineB].forEach(line => {
+                if (hasGSAP) {
+                    const len = line.getTotalLength();
+                    line.style.strokeDasharray = len;
+                    line.style.strokeDashoffset = len;
+                    gsap.to(line, { strokeDashoffset: 0, duration: prefersReduced ? 0.3 : 1.4, ease: 'power2.out' });
+                }
+            });
+        }
+
+        function tierColor(tier) {
+            return tier === 'good' ? '#4CAF50' : tier === 'warn' ? '#FFC107' : '#ff6b5e';
+        }
+
+        function buildReport(scenario) {
+            const risksEl = document.getElementById('report-risks');
+            risksEl.innerHTML = '';
+            const cats = Object.values(scenario.categories);
+            cats.forEach(cat => {
+                risksEl.insertAdjacentHTML('beforeend', `
+                    <div class="risk-row tier-${cat.tier}">
+                        <span class="risk-name">${cat.label}</span>
+                        <div class="risk-track"><span class="risk-fill" style="width:0%"></span></div>
+                        <span class="risk-score">${cat.score}</span>
+                    </div>`);
+            });
+            risksEl.querySelectorAll('.risk-row').forEach((row, i) => {
+                const fill = row.querySelector('.risk-fill');
+                if (hasGSAP) {
+                    gsap.to(fill, { width: cats[i].score + '%', duration: prefersReduced ? 0.2 : 0.9, delay: i * 0.08, ease: 'power2.out' });
+                } else {
+                    fill.style.transition = 'width 0.8s ease-out';
+                    requestAnimationFrame(() => { fill.style.width = cats[i].score + '%'; });
+                }
+            });
+
+            const circumference = 2 * Math.PI * 52;
+            const ring = document.getElementById('score-ring-fill');
+            ring.style.strokeDasharray = circumference;
+            ring.style.strokeDashoffset = circumference;
+            const ringColor = scenario.overallScore >= 70 ? '#4CAF50' : scenario.overallScore >= 50 ? '#FFC107' : '#ff6b5e';
+            ring.setAttribute('stroke', ringColor);
+            if (hasGSAP) {
+                gsap.to(ring, { strokeDashoffset: circumference * (1 - scenario.overallScore / 100), duration: prefersReduced ? 0.3 : 1.2, ease: 'power2.out' });
+            } else {
+                ring.style.transition = 'stroke-dashoffset 1s ease-out';
+                requestAnimationFrame(() => { ring.style.strokeDashoffset = circumference * (1 - scenario.overallScore / 100); });
+            }
+            tweenNumber(document.getElementById('score-value'), scenario.overallScore, prefersReduced ? 0.3 : 1.2);
+
+            document.getElementById('score-label').textContent =
+                scenario.overallScore >= 70 ? 'Stable — Monitor Closely' :
+                scenario.overallScore >= 50 ? 'Moderate Risk Detected' : 'Critical Attention Needed';
+
+            document.getElementById('primary-bottleneck').innerHTML = `
+                <span style="font-size:1.2rem;">⚠️</span>
+                <div><strong style="color: var(--white);">${scenario.bottleneck.title}</strong><br>${scenario.bottleneck.detail}</div>`;
+
+            drawGrowthChart(scenario.growth);
+        }
+
+        async function runDiagnosis() {
+            const scenario = SCENARIOS[Math.floor(Math.random() * SCENARIOS.length)];
+
+            runBtn.disabled = true;
+            statusTag.textContent = 'Scanning…';
+            statusTag.className = 'ui-live-tag scanning';
+
+            stageIntro.hidden = true;
+            stageReport.hidden = true;
+            stageScan.hidden = false;
+            thinking.hidden = true;
+
+            document.querySelectorAll('.scan-row').forEach(row => {
+                row.classList.remove('active', 'done');
+                row.querySelector('.scan-bar-fill').style.width = '0%';
+                row.querySelector('.scan-pct').textContent = '0%';
+                const result = row.querySelector('.scan-result');
+                result.textContent = '';
+                result.className = 'scan-result';
+            });
+
+            const order = ['financial', 'operations', 'marketing', 'growth'];
+            for (const key of order) {
+                const cat = scenario.categories[key];
+                const row = document.querySelector('.scan-row[data-key="' + key + '"]');
+                const fill = row.querySelector('.scan-bar-fill');
+                const pct = row.querySelector('.scan-pct');
+                const result = row.querySelector('.scan-result');
+                row.classList.add('active');
+                await animateBar(fill, pct, cat.score);
+                result.textContent = cat.status;
+                result.classList.add('tier-' + cat.tier);
+                row.classList.remove('active');
+                row.classList.add('done');
+                await wait(180);
+            }
+
+            thinking.hidden = false;
+            await wait(prefersReduced ? 150 : 1100);
+
+            buildReport(scenario);
+            stageScan.hidden = true;
+            stageReport.hidden = false;
+            if (hasGSAP && !prefersReduced) {
+                gsap.from(stageReport, { opacity: 0, y: 12, duration: 0.45, ease: 'power2.out' });
+            }
+
+            statusTag.textContent = 'Complete';
+            statusTag.className = 'ui-live-tag complete';
+            runBtn.disabled = false;
+
+            if (window.__bindCursorTargets) window.__bindCursorTargets();
+        }
+
+        function resetDemo() {
+            stageReport.hidden = true;
+            stageIntro.hidden = false;
+            statusTag.textContent = 'Idle';
+            statusTag.className = 'ui-live-tag';
+        }
+
+        runBtn.addEventListener('click', runDiagnosis);
+        if (rerunBtn) rerunBtn.addEventListener('click', runDiagnosis);
+    })();
+
+    </script>
+</body>
+</html>
